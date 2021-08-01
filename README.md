@@ -10,7 +10,7 @@ tbd
 
 
 
-<a href="https://nbviewer.jupyter.org/github/JonathanWillnow/CompuStatsClustering/FinalProject.ipynb"
+<a href="https://nbviewer.jupyter.org/github/JonathanWillnow/CompuStatsClustering/blob/master/FinalProject.ipynb"
    target="_parent">
    <img align="center"
   src="https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.png"
