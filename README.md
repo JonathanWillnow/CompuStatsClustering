@@ -10,13 +10,13 @@ tbd
 
 
 
-<a href="https://nbviewer.jupyter.org/github/JonathanWillnow/CompuStatsClustering/blob/master/FinalProject.ipynb"
+<a href="https://nbviewer.jupyter.org/github/JonathanWillnow/CompuStatsClustering/blob/main/FinalProject.ipynb"
    target="_parent">
    <img align="center"
   src="https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.png"
       width="109" height="20">
 </a>
-<a href="https://mybinder.org/v2/gh/JonathanWillnow/CompuStatsClustering/master?filepath=FinalProject.ipynb"
+<a href="https://mybinder.org/v2/gh/JonathanWillnow/CompuStatsClustering/main?filepath=FinalProject.ipynb"
     target="_parent">
     <img align="center"
        src="https://mybinder.org/badge_logo.svg"
