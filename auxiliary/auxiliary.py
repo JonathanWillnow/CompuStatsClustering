@@ -16,9 +16,11 @@ import kneed
 
 import time
 
+random.seed(10)
 
-def generate_blobs(n_samples, centers, cluster_std, random_state):
-    features, true_labels = sk_data.make_blobs(n_samples=n_samples, centers=centers, cluster_std=cluster_std, random_state=random_state)
+
+def generate_blobs(n_samples, centers, cluster_std):
+    features, true_labels = sk_data.make_blobs(n_samples=n_samples, centers=centers, cluster_std=cluster_std)
 
     # Standartization
     scaler = sk_preprocessing.StandardScaler()
@@ -403,15 +405,15 @@ def benchmark_algorithm(dataset_sizes, cluster_function, function_args, function
 
 
 
-def benchmark(kwargs_random, kwargs_affin):
+def benchmark(kwargs_affin):
     
     dataset_sizes = np.hstack([np.arange(1, 4) * 500])#, np.arange(3,7) * 1000, np.arange(4,10) * 2000])
      
 #########
-    k_means = sk_cluster.KMeans(10, **kwargs_random)
+    k_means = sk_cluster.KMeans(10)
     k_means_data = benchmark_algorithm(dataset_sizes, k_means.fit, (), {})
 
-    k_medoids = skx_cluster.KMedoids(**kwargs_random)
+    k_medoids = skx_cluster.KMedoids()
     k_medoids_data = benchmark_algorithm(dataset_sizes, k_medoids.fit, (), {})
     #{'n_clusters':3,  "init": "random", "max_iter": 300, "random_state": 42})
 
