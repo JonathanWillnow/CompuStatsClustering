@@ -84,7 +84,7 @@ def plot_clusters(data, data_c, algorithm, args, kwds):
     plt.subplot(121)
     ax = sns.scatterplot(x=results.x1, y=results.x2, hue = labels)
     ax.set_title('Clusters found by {}'.format(str(algorithm.__name__)), fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 #########
     start_time = time.time()
     labels_c = algorithm(*args, **kwds).fit_predict(data_c)
@@ -98,7 +98,7 @@ def plot_clusters(data, data_c, algorithm, args, kwds):
     plt.subplot(122)
     ax = sns.scatterplot(x=results_c.x1, y=results_c.x2, hue = labels_c)
     ax.set_title('Clusters found by {}'.format(str(algorithm.__name__)), fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
     
     
     
@@ -118,9 +118,9 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     kwds = {'n_clusters':n, 'linkage':'ward'}
     fig, ax = plt.subplots(4,2, figsize = (20,40))
   
-    start_time = time.time()
+    #start_time = time.time()
     labels = sk_cluster.AgglomerativeClustering(*args, **kwds).fit_predict(data)
-    end_time = time.time()
+    #end_time = time.time()
     
     results = pd.DataFrame(data, columns = ["x1", "x2"])
     results["labels"] = labels
@@ -128,7 +128,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(421)
     ax = sns.scatterplot(x=results.x1, y=results.x2, hue = labels)
     ax.set_title('Clusters found using ward' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 ##
     kwds = {'n_clusters':n, 'linkage':'ward'}
   
@@ -142,7 +142,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(422)
     ax = sns.scatterplot(x=results_c.x1, y=results_c.x2, hue = labels_c)
     ax.set_title('Clusters found using ward' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 
 ###########
     kwds = {'n_clusters':n, 'linkage':'complete'}
@@ -156,7 +156,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(423)
     ax = sns.scatterplot(x=results.x1, y=results.x2, hue = labels)
     ax.set_title('Clusters found using complete linkage' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 ##
     kwds = {'n_clusters':n, 'linkage':'complete'}
   
@@ -170,7 +170,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(424)
     ax = sns.scatterplot(x=results_c.x1, y=results_c.x2, hue = labels_c)
     ax.set_title('Clusters found using complete linkage' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 ###########
     kwds = {'n_clusters':n, 'linkage':'average'}
     start_time = time.time()
@@ -183,7 +183,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(425)
     ax = sns.scatterplot(x=results.x1, y=results.x2, hue = labels)
     ax.set_title('Clusters found using average linkage' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 ##
     kwds = {'n_clusters':n, 'linkage':'average'}
   
@@ -197,7 +197,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(426)
     ax = sns.scatterplot(x=results_c.x1, y=results_c.x2, hue = labels_c)
     ax.set_title('Clusters found using average linkage' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 ###########
 
     kwds = {'n_clusters':n, 'linkage':'single'}
@@ -211,7 +211,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(427)
     ax = sns.scatterplot(x=results.x1, y=results.x2, hue = labels)
     ax.set_title('Clusters found using single linkage' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 ##
     kwds = {'n_clusters':n, 'linkage':'single'}
   
@@ -225,7 +225,7 @@ def plot_Agglomerative_clusters(data,data_c, n, args):
     plt.subplot(428)
     ax = sns.scatterplot(x=results_c.x1, y=results_c.x2, hue = labels_c)
     ax.set_title('Clusters found using single linkage' , fontsize=24)
-    plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
+    #plt.text(-0.5, 0.7, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=14)
 ###########
 
 
@@ -407,7 +407,7 @@ def benchmark_algorithm(dataset_sizes, cluster_function, function_args, function
 
 def benchmark(kwargs_affin):
     
-    dataset_sizes = np.hstack([np.arange(1, 4) * 500])#, np.arange(3,7) * 1000, np.arange(4,10) * 2000])
+    dataset_sizes = np.hstack([np.arange(1, 4) * 500, np.arange(3,7) * 1000, np.arange(4,6) * 2000])
      
 #########
     k_means = sk_cluster.KMeans(10)
