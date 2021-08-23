@@ -20,7 +20,7 @@ random.seed(10)
 
 
 def generate_blobs(n_samples, centers, cluster_std):
-    features, true_labels = sk_data.make_blobs(n_samples=n_samples, centers=centers, cluster_std=cluster_std)
+    features, true_labels = sk_data.make_blobs(n_samples=n_samples, centers=centers, cluster_std=cluster_std, random_state = 10)
 
     # Standartization
     scaler = sk_preprocessing.StandardScaler()
@@ -238,7 +238,7 @@ def kmeans_validation_example(kmeans_kwargs, kmax, data):
     
     sse = []
     for k in range(1, kmax):
-        kmeans = sk_cluster.KMeans(n_clusters=k, **kmeans_kwargs)
+        kmeans = sk_cluster.KMeans(n_clusters=k, **kmeans_kwargs, random_state = 10)
         kmeans.fit(data[["x1", "x2"]])
         sse.append(kmeans.inertia_)
 
@@ -248,7 +248,7 @@ def kmeans_validation_example(kmeans_kwargs, kmax, data):
     
     silhouette_coef = []
     for k in range(2, kmax):
-        kmeans = sk_cluster.KMeans(n_clusters=k, **kmeans_kwargs)
+        kmeans = sk_cluster.KMeans(n_clusters=k, **kmeans_kwargs, random_state = 10)
         kmeans.fit(data[["x1", "x2"]])
         score = round(sk_metrics.silhouette_score(data, kmeans.labels_),4)
         silhouette_coef.append(score)
@@ -302,7 +302,7 @@ def kmedoids_validation_example(kmedoids_kwargs, kmax, data):
     
     sse = []
     for k in range(1, kmax):
-        kmedoids = skx_cluster.KMedoids(n_clusters=k, **kmedoids_kwargs )
+        kmedoids = skx_cluster.KMedoids(n_clusters=k, **kmedoids_kwargs, random_state = 10 )
         kmedoids.fit(data[["x1", "x2"]])
         sse.append(kmedoids.inertia_)
 
@@ -312,7 +312,7 @@ def kmedoids_validation_example(kmedoids_kwargs, kmax, data):
     
     silhouette_coef = []
     for k in range(2, kmax):
-        kmedoids = skx_cluster.KMedoids(n_clusters=k, **kmedoids_kwargs )
+        kmedoids = skx_cluster.KMedoids(n_clusters=k, **kmedoids_kwargs, random_state = 10 )
         kmedoids.fit(data[["x1", "x2"]])
         score = round(sk_metrics.silhouette_score(data, kmedoids.labels_),4)
         silhouette_coef.append(score)
@@ -410,10 +410,10 @@ def benchmark(kwargs_affin):
     dataset_sizes = np.hstack([np.arange(1, 4) * 500, np.arange(3,7) * 1000, np.arange(4,6) * 2000])
      
 #########
-    k_means = sk_cluster.KMeans(10)
+    k_means = sk_cluster.KMeans(10, random_state = 10)
     k_means_data = benchmark_algorithm(dataset_sizes, k_means.fit, (), {})
 
-    k_medoids = skx_cluster.KMedoids()
+    k_medoids = skx_cluster.KMedoids(random_state = 10)
     k_medoids_data = benchmark_algorithm(dataset_sizes, k_medoids.fit, (), {})
     #{'n_clusters':3,  "init": "random", "max_iter": 300, "random_state": 42})
 
@@ -421,14 +421,11 @@ def benchmark(kwargs_affin):
     mean_shift = sk_cluster.MeanShift(10)
     mean_shift_data = benchmark_algorithm(dataset_sizes, mean_shift.fit, (), {})
 
-    affinity_propagation = sk_cluster.AffinityPropagation(**kwargs_affin);
+    affinity_propagation = sk_cluster.AffinityPropagation(**kwargs_affin, random_state = 10);
     affinity_propagation_data = benchmark_algorithm(dataset_sizes, affinity_propagation.fit, (), {});
 
     agglomarative_clustering = sk_cluster.AgglomerativeClustering();
     agglomarative_clustering_data = benchmark_algorithm(dataset_sizes, agglomarative_clustering.fit, (), {});
-
-    dbscan = sk_cluster.DBSCAN()
-    dbscan_data = benchmark_algorithm(dataset_sizes, dbscan.fit, (), {})
 
 ##########
 
@@ -438,9 +435,8 @@ def benchmark(kwargs_affin):
     ax = sns.lineplot(x= 'nobs', y='time', data=mean_shift_data, label='Sklearn Meanshift')
     ax = sns.lineplot(x= 'nobs', y='time', data=affinity_propagation_data, label='Sklearn Affinity Propagation')
     ax = sns.lineplot(x= 'nobs', y='time', data=agglomarative_clustering_data, label='Sklearn Agglomerative Clustering')
-    ax = sns.lineplot(x= 'nobs', y='time', data=dbscan_data, label='Sklearn DBSCAN')
-    ax.set_xlabel("Data Points")
-    ax.set_ylabel("Time Taken")
+    ax.set_xlabel("Size of dataset")
+    ax.set_ylabel("Time Taken per run in sec")
     plt.plot();
 
 #########################################################################
