@@ -405,7 +405,7 @@ def benchmark_algorithm(dataset_sizes, cluster_function, function_args, function
 
 
 
-def benchmark(kwargs_affin):
+def benchmark():
     
     dataset_sizes = np.hstack([np.arange(1, 4) * 500, np.arange(3,7) * 1000, np.arange(4,6) * 2000])
      
@@ -421,7 +421,7 @@ def benchmark(kwargs_affin):
     mean_shift = sk_cluster.MeanShift(10)
     mean_shift_data = benchmark_algorithm(dataset_sizes, mean_shift.fit, (), {})
 
-    affinity_propagation = sk_cluster.AffinityPropagation(**kwargs_affin, random_state = 10);
+    affinity_propagation = sk_cluster.AffinityPropagation(random_state = 10);
     affinity_propagation_data = benchmark_algorithm(dataset_sizes, affinity_propagation.fit, (), {});
 
     agglomarative_clustering = sk_cluster.AgglomerativeClustering();
@@ -441,4 +441,101 @@ def benchmark(kwargs_affin):
 
 #########################################################################
 
+
+
+
+
+def simulate_data(n_samples, centers, cluster_std, cov):
+    
+    data, true_labels = sk_data.make_blobs(n_samples=n_samples, centers = centers, cluster_std = cluster_std, random_state = 10)
+        
+    data = np.dot(data, cov)
+              
+    scaler = sk_preprocessing.StandardScaler()
+    data_s = scaler.fit_transform(data)
+    data_df = pd.DataFrame(data_s, columns = ["x1", "x2"])
+        
+    data_df["label"] = true_labels
+        
+    return(data_df)
+
+
+#########################################################################
+
+
+def simulation_study(reps, data, algorithm, args, kwds):
+        
+        
+    # non spiral data
+    metrics = []
+    
+    for rep in range(reps):
+        start_time = time.time()
+
+        algo_fitted = algorithm(*args, **kwds).fit(data[["x1", "x2"]])
+
+        end_time = time.time()
+
+        results = pd.DataFrame(data, columns = ["x1", "x2"])
+        results["label"] = algo_fitted.labels_
+
+        FMS = sk_metrics.fowlkes_mallows_score(data.label, algo_fitted.labels_)
+        DBI = sk_metrics.davies_bouldin_score(data[["x1","x2"]], algo_fitted.labels_)
+        SC = sk_metrics.silhouette_score(data[["x1","x2"]], algo_fitted.labels_)
+        metrics.append([FMS, DBI,SC, (end_time - start_time)])
+
+            
+    metrics_df = pd.DataFrame(data = metrics, columns = ["FMI", "DBI", "SC", "time"])
+    FMS_avg = round(metrics_df.FMI.mean(),4)
+    DBI_avg = round(metrics_df.DBI.mean(),4)
+    SC_avg = round(metrics_df.SC.mean(),4)
+    
+    fin_metrics = pd.DataFrame(columns = ["Fowlkes Mallows Index", "Davies Bouldin Index", "Silhouette Score", "time", "reps"])
+    
+    if (algorithm == sk_cluster.AgglomerativeClustering or algorithm == sk_cluster.MeanShift):
+        fin_metrics.loc['{}'.format(str(algorithm.__name__))] = [FMS_avg,DBI_avg, SC_avg, metrics.time.mean(), 1]
+        
+    else:
+        fin_metrics.loc['{}'.format(str(algorithm.__name__))] = [FMS_avg,DBI_avg, SC_avg, metrics.time.mean(), reps*7.5]
+    fig, ax = plt.subplots(1,2, figsize = (14,7))
+
+   
+    plt.subplot(121)
+    ax = sns.scatterplot(x=results.x1, y=results.x2, hue = data.label)
+    ax.set_title('Original dataset', fontsize=10)
+     
+    plt.subplot(122)
+    ax = sns.scatterplot(x=results.x1, y=results.x2, hue = results.label)
+    ax.set_title('Clusters found by {}'.format(str(algorithm.__name__)), fontsize=10)
+
+    return(algo_fitted, fin_metrics)
+
+
+
+
+#########################################################################
+
+
+def simulation_results(nreps, data):
+    kmeans, metrics1 = simulation_study(nreps, data, sk_cluster.KMeans, (), {'n_clusters':3,  "init": "random", "n_init": 10, "max_iter": 300, "random_state" : 10})
+    kmedoids, metrics2 = simulation_study(nreps, data, skx_cluster.KMedoids, (), {'n_clusters':3,  "init": "random", "max_iter": 300, "random_state" : 10})
+    affinity, metrics8 = simulation_study(nreps, data, sk_cluster.AffinityPropagation, (), {'preference':-5.0, 'damping':0.95,"max_iter": 300, "random_state" : 10})
+    meanshift, metrics3 = simulation_study(1, data, sk_cluster.MeanShift, (),  {'cluster_all':False, "max_iter": 300})
+    agglo_complete, metrics4 = simulation_study(1, data, sk_cluster.AgglomerativeClustering, (), {'n_clusters':3, 'linkage':'ward'})
+    agglo_complete, metrics5 = simulation_study(1, data, sk_cluster.AgglomerativeClustering, (), {'n_clusters':3, 'linkage':'complete'})
+    agglo_complete, metrics6 = simulation_study(1, data, sk_cluster.AgglomerativeClustering, (), {'n_clusters':3, 'linkage':'average'})
+    agglo_complete, metrics7 = simulation_study(1, data, sk_cluster.AgglomerativeClustering, (), {'n_clusters':3, 'linkage':'single'})
+    
+    i = ["-","-","-","-","ward","complete","average","single"]
+    frames = [metrics1, metrics2,metrics8, metrics3, metrics4, metrics5, metrics6, metrics7]
+    result_df = pd.DataFrame(pd.concat(frames), columns =  ["Fowlkes Mallows Index", "Davies Bouldin Index", "Silhouette Score", "time","reps"])
+    result_df["further spec."] = i
+    
+    return(result_df)
+    
+
+
+
+
+#########################################################################
     
