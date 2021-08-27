@@ -467,7 +467,7 @@ def simulation_study(reps, data, algorithm, args, kwds):
         
         
     # non spiral data
-    metrics = []
+    metrics_df = pd.DataFrame(columns = ["FMI", "DBI", "SC", "time"])
     
     for rep in range(reps):
         start_time = time.time()
@@ -482,21 +482,15 @@ def simulation_study(reps, data, algorithm, args, kwds):
         FMS = sk_metrics.fowlkes_mallows_score(data.label, algo_fitted.labels_)
         DBI = sk_metrics.davies_bouldin_score(data[["x1","x2"]], algo_fitted.labels_)
         SC = sk_metrics.silhouette_score(data[["x1","x2"]], algo_fitted.labels_)
-        metrics.append([FMS, DBI,SC, (end_time - start_time)])
+        metrics_df.loc[rep] = [FMS, DBI,SC, (end_time - start_time)]
 
-            
-    metrics_df = pd.DataFrame(data = metrics, columns = ["FMI", "DBI", "SC", "time"])
     FMS_avg = round(metrics_df.FMI.mean(),4)
     DBI_avg = round(metrics_df.DBI.mean(),4)
     SC_avg = round(metrics_df.SC.mean(),4)
     
     fin_metrics = pd.DataFrame(columns = ["Fowlkes Mallows Index", "Davies Bouldin Index", "Silhouette Score", "time", "reps"])
     
-    if (algorithm == sk_cluster.AgglomerativeClustering or algorithm == sk_cluster.MeanShift):
-        fin_metrics.loc['{}'.format(str(algorithm.__name__))] = [FMS_avg,DBI_avg, SC_avg, metrics.time.mean(), 1]
-        
-    else:
-        fin_metrics.loc['{}'.format(str(algorithm.__name__))] = [FMS_avg,DBI_avg, SC_avg, metrics.time.mean(), reps*7.5]
+    fin_metrics.loc['{}'.format(str(algorithm.__name__))] = [FMS_avg,DBI_avg, SC_avg, metrics_df.time.mean(), reps]
     fig, ax = plt.subplots(1,2, figsize = (14,7))
 
    
