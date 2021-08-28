@@ -39,22 +39,29 @@ I would also like to thank all the awesome people that provide their knowledge b
 ## Sources
 
 
-* MacQueen (1967): Some methods for classification and analysis of multivariate observations, Berkeley Symposium on Mathematical Statistics and Probability, 1967: 281-297 (1967).
-
 
 * Bayne et al. (1980): Monte Carlo Comparison of selected clustering procedures, Pattern Recognition, 12:2, 51-62.
-
-
-* Halkidi et al. (2001): On Clustering Validation Techniques, Journal of Intelligent Information Systems, 17:2/3, 107-145.
-
-
-* Documentation of the scikit-learn.org library. Online source [https://scikit-learn.org/stable/modules/clustering.html#clustering], last access 24.08.2021.
 
 
 * Documentation of the hdbscan.io library. Online source [https://hdbscan.readthedocs.io/en/latest/index.html], last access 24.08.2021.
 
 
+* Documentation of the scikit-learn.org library. Online source [https://scikit-learn.org/stable/modules/clustering.html#clustering], last access 24.08.2021.
+
+
+* Halkidi et al. (2001): On Clustering Validation Techniques, Journal of Intelligent Information Systems, 17:2/3, 107-145.
+
+
 * intechopen.com (2017): Partitional Clustering, Uğurhan Kutbay, DOI: 10.5772/intechopen.75836. Online source [https://www.intechopen.com/chapters/60501], last access 23.08.2021.
+
+
+* Klecker (2019): Building A Classification Model Using Affinity Propagation, Electronic Theses and Dissertations, 1917, Georgia Southern University.
+
+
+* MacQueen (1967): Some methods for classification and analysis of multivariate observations, Berkeley Symposium on Mathematical Statistics and Probability, 1967: 281-297 (1967).
+
+
+* Moro et al. (2014): A Data-Driven Approach to Predict the Success of Bank Telemarketing, Decision Support Systems, Elsevier, 62:22-31, June 2014.
 
 
 * realpython.com (n.d): K-Means Clustering in Python: A Practical Guide, Kevin Arvai. Online source [https://realpython.com/k-means-clustering-python/], last access 23.08.2021.
@@ -63,15 +70,7 @@ I would also like to thank all the awesome people that provide their knowledge b
 * Theodoridis and Koutroumbas (2008): Pattern Recognition, Academic Press, ISBN 9781597492720.
 
 
-* Moro et al. (2014): A Data-Driven Approach to Predict the Success of Bank Telemarketing, Decision Support Systems, Elsevier, 62:22-31, June 2014.
-
-
-* Klecker (2019): Building A Classification Model Using Affinity Propagation, Electronic Theses and Dissertations, 1917, Georgia Southern University.
-
-
 * towardsdatascience.com (2020): Understanding K-Means, K-Means++ and, K-Medoids Clustering Algorithms, Satyam Kunmar. Online source [https://towardsdatascience.com/understanding-k-means-k-means-and-k-medoids-clustering-algorithms-ad9c9fbf47ca], last access 23.08.2021.
-
-
 
 
 
