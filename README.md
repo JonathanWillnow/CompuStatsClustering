@@ -1,4 +1,4 @@
-# Computational Statistics, Summer 2021 by Marina Khismatullina | Jonathan Willnow | Partitioning and Hierarchical Clustering and their validation
+# Computational Statistics, Summer 2021 by Marina Khismatullina | Jonathan Willnow | Partitioning and Hierarchical Clustering and their Validation
 
 This is the final project for the course Computational Statistics at the University of Bonn (summerterm 2021) b< Jonathan Willnow
 
